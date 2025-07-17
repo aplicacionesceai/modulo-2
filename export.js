@@ -1,26 +1,24 @@
 function exportarDatos() {
   const data = localStorage.getItem("respuestas_modulo2");
   if (!data) return alert("No hay datos guardados.");
+  const blob = new Blob([data], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "respuestas_modulo2.json";
+  let descargaFallida = false;
   try {
-    const blob = new Blob([data], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "respuestas_modulo2.json";
-    // Para iOS/iPadOS viejos, este click puede fallar
     a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
   } catch (e) {
-    mostrarJsonEnModal(data);
-    return;
+    descargaFallida = true;
   }
-  // Verificar si el archivo fue descargado (iOS viejos no lo permiten)
   setTimeout(() => {
-    // Si el usuario está en iPad/iOS y no se descargó, mostrar modal
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !navigator.userAgent.includes('Macintosh')) {
+    URL.revokeObjectURL(url);
+    // Si la descarga falló o estamos en iPad/iOS, mostrar el modal
+    if (descargaFallida || (/iPad|iPhone|iPod/.test(navigator.userAgent) && !navigator.userAgent.includes('Macintosh'))) {
       mostrarJsonEnModal(data);
     }
-  }, 500);
+  }, 300);
 }
 
 function mostrarJsonEnModal(json) {
