@@ -46,3 +46,8 @@ function mostrarJsonEnModal(json) {
   modal.style.display = 'block';
   overlay.style.display = 'block';
 }
+
+
+
+
+
