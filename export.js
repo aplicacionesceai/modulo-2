@@ -1,24 +1,7 @@
 function exportarDatos() {
   const data = localStorage.getItem("respuestas_modulo2");
   if (!data) return alert("No hay datos guardados.");
-  const blob = new Blob([data], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "respuestas_modulo2.json";
-  let descargaFallida = false;
-  try {
-    a.click();
-  } catch (e) {
-    descargaFallida = true;
-  }
-  setTimeout(() => {
-    URL.revokeObjectURL(url);
-    // Si la descarga falló o estamos en iPad/iOS, mostrar el modal
-    if (descargaFallida || (/iPad|iPhone|iPod/.test(navigator.userAgent) && !navigator.userAgent.includes('Macintosh'))) {
-      mostrarJsonEnModal(data);
-    }
-  }, 300);
+  mostrarJsonEnModal(data);
 }
 
 function mostrarJsonEnModal(json) {
