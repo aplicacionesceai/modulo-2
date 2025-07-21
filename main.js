@@ -2,19 +2,23 @@
 function limpiarFormulario() {
   const formulario = document.getElementById('formularioModulo');
   if (formulario) {
-    if (confirm('¿Desea reiniciar el formulario? Los datos guardados no se borrarán.')) {
+    const respuesta = confirm('¿Desea reiniciar el formulario?\n\nLos registros guardados no se borrarán.');
+    if (respuesta) {
+      // Limpiar todos los inputs
       formulario.reset();
-
       const checkboxes = formulario.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach(checkbox => checkbox.checked = false);
-
+      
       const radios = formulario.querySelectorAll('input[type="radio"]');
       radios.forEach(radio => radio.checked = false);
-
+      
       const textareas = formulario.querySelectorAll('textarea');
       textareas.forEach(textarea => textarea.value = '');
       
-      localStorage.removeItem('respuestas_modulo2'); // Solo borra la respuesta actual, no los registros acumulados
+      // Limpiar solo la respuesta actual
+      localStorage.removeItem('respuestas_modulo2');
+      
+      // Mostrar confirmación
       alert('✅ Formulario reiniciado correctamente');
     }
   }

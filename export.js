@@ -12,9 +12,8 @@ function guardarRegistro(datos) {
     }
     registrosAcumulados.push(JSON.parse(datos));
     contadorRegistros = registrosAcumulados.length;
-    actualizarContador();
     localStorage.setItem('registrosAcumulados', JSON.stringify(registrosAcumulados));
-    alert(`✅ Registro guardado correctamente\n\nRegistros acumulados: ${contadorRegistros}`);
+    alert(`✅ Registro guardado correctamente\n\nHas guardado ${contadorRegistros} ${contadorRegistros === 1 ? 'registro' : 'registros'} en total.`);
 }
 
 function exportarDatos() {
@@ -27,21 +26,7 @@ function exportarDatos() {
     // Preparar todos los registros para exportar
     const todosLosRegistros = JSON.stringify(registrosAcumulados, null, 2);
     
-    // Crear el blob y el enlace de descarga
-    const blob = new Blob([todosLosRegistros], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
-    const enlaceDescarga = document.createElement('a');
-    enlaceDescarga.href = url;
-    enlaceDescarga.download = `registros_modulo2_${new Date().toISOString().slice(0,10)}.json`;
-    
-    // En iPad necesitamos mostrar el contenido en una nueva pestaña
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        window.open(url, '_blank');
-    } else {
-        enlaceDescarga.click();
-    }
-    
-    window.URL.revokeObjectURL(url);
+    // Mostrar en el modal directamente
     mostrarJsonEnModal(todosLosRegistros);
 }
 
