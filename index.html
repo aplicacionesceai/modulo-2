@@ -9,45 +9,44 @@
   <title>Módulo 2 - Observación Técnica</title>
 </head>
 <body>
+  <img src="img/logo-sena.png" alt="Logo SENA" class="sena-logo" />
   <main>
     <h1>Módulo 2: Observación Técnica (RETIE)</h1>
-    <form id="formularioModulo" id="formulario">
-
-<!-- 1 -->
-<fieldset>
-  <legend>1. Describa la acometida observada desde el poste hasta la vivienda.</legend>
-  <textarea name="p1" rows="3" placeholder="Escriba su descripción aquí..."></textarea>
-</fieldset>
-
-<!-- 2 -->
-<fieldset>
-  <legend>2. ¿La vivienda tiene instalación eléctrica fija?</legend>
-  <label><input type="radio" name="p2" value="Sí"> Sí</label>
-  <label><input type="radio" name="p2" value="No"> No</label>
-</fieldset>
-
-<!-- 3 -->
-<fieldset>
-  <legend>3. ¿La instalación de la vivienda es?</legend>
-  <label><input type="radio" name="p3" value="Áerea"> Áerea</label>
-  <label><input type="radio" name="p3" value="Empotrada"> Empotrada</label>
-  <label><input type="radio" name="p3" value="Mixta"> Mixta</label>
-  <label><input type="radio" name="p3" value="No aplica"> No aplica</label>
-</fieldset>
-
-<!-- 4 -->
-<fieldset>
-  <legend>4. ¿Existe tablero de distribución?</legend>
-  <label><input type="radio" name="p4" value="Sí"> Sí</label>
-  <label><input type="radio" name="p4" value="No"> No</label>
-  <label><input type="radio" name="p4" value="Solo fusibles improvisados"> Solo fusibles improvisados</label>
-</fieldset>
-
-<!-- 5 -->
-<fieldset>
-  <legend>5. ¿El tablero tiene protecciones?</legend>
-  <label><input type="checkbox" name="p5" value="Interruptor general"> Interruptor general</label>
-  <label><input type="checkbox" name="p5" value="Breakers individuales"> Breakers individuales</label>
+    <form id="formularioModulo">
+      <!-- 1 -->
+      <fieldset>
+        <legend>1. Describa la acometida observada desde el poste hasta la vivienda.</legend>
+        <textarea name="p1" rows="3" placeholder="Escriba su descripción aquí..."></textarea>
+      </fieldset>
+      <!-- 2 -->
+      <fieldset>
+        <legend>2. ¿La vivienda tiene instalación eléctrica fija?</legend>
+        <label><input type="radio" name="p2" value="Sí"> Sí</label>
+        <label><input type="radio" name="p2" value="No"> No</label>
+      </fieldset>
+      <!-- 3 -->
+      <fieldset>
+        <legend>3. ¿La instalación de la vivienda es?</legend>
+        <label><input type="radio" name="p3" value="Áerea"> Áerea</label>
+        <label><input type="radio" name="p3" value="Empotrada"> Empotrada</label>
+        <label><input type="radio" name="p3" value="Mixta"> Mixta</label>
+        <label><input type="radio" name="p3" value="No aplica"> No aplica</label>
+      </fieldset>
+      <!-- 4 -->
+      <fieldset>
+        <legend>4. ¿Existe tablero de distribución?</legend>
+        <label><input type="radio" name="p4" value="Sí"> Sí</label>
+        <label><input type="radio" name="p4" value="No"> No</label>
+        <label><input type="radio" name="p4" value="Solo fusibles improvisados"> Solo fusibles improvisados</label>
+      </fieldset>
+      <!-- 5 -->
+      <fieldset>
+        <legend>5. ¿El tablero tiene protecciones?</legend>
+        <label><input type="checkbox" name="p5" value="Interruptor general"> Interruptor general</label>
+        <label><input type="checkbox" name="p5" value="Breakers individuales"> Breakers individuales</label>
+      </fieldset>
+      <!-- ...existing form fields... -->
+    </form>
   <label><input type="checkbox" name="p5" value="Fusibles"> Fusibles</label>
   <label><input type="checkbox" name="p5" value="Cuchilla de protección"> Cuchilla de protección</label>
   <label><input type="checkbox" name="p5" value="Ninguna"> Ninguna</label>
@@ -150,13 +149,10 @@
       <div class="acciones">
         <button type="button" onclick="guardarRespuestas()">Guardar</button>
         <button type="button" onclick="exportarDatos()">Exportar JSON</button>
+        <button type="button" onclick="limpiarFormulario()">Limpiar Datos</button>
+        <div id="contadorRegistros" class="contador">Registros acumulados: 0</div>
       </div>
-    
-  <button id="botonLimpiar" type="button" onclick="limpiarFormulario()" style="margin-top: 20px;">
-    Limpiar datos
-  </button>
-
-</form>
+    </form>
   </main>
   <script src="indexedDB.js"></script>
   <script src="main.js"></script>

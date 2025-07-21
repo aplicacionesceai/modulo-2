@@ -1,7 +1,49 @@
+let registrosAcumulados = [];
+let contadorRegistros = 0;
+
+function actualizarContador() {
+    const contadorElement = document.getElementById('contadorRegistros');
+    if (contadorElement) {
+        contadorElement.textContent = `Registros acumulados: ${contadorRegistros}`;
+    }
+}
+
+function guardarRegistro(datos) {
+    if (!Array.isArray(registrosAcumulados)) {
+        registrosAcumulados = [];
+    }
+    registrosAcumulados.push(JSON.parse(datos));
+    contadorRegistros = registrosAcumulados.length;
+    actualizarContador();
+    localStorage.setItem('registrosAcumulados', JSON.stringify(registrosAcumulados));
+}
+
 function exportarDatos() {
-  const data = localStorage.getItem("respuestas_modulo2");
-  if (!data) return alert("No hay datos guardados.");
-  mostrarJsonEnModal(data);
+    const data = localStorage.getItem("respuestas_modulo2");
+    if (!data) return alert("No hay datos guardados.");
+    
+    // Guardar el nuevo registro
+    guardarRegistro(data);
+    
+    // Preparar todos los registros para exportar
+    const todosLosRegistros = JSON.stringify(registrosAcumulados, null, 2);
+    
+    // Crear el blob y el enlace de descarga
+    const blob = new Blob([todosLosRegistros], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const enlaceDescarga = document.createElement('a');
+    enlaceDescarga.href = url;
+    enlaceDescarga.download = `registros_modulo2_${new Date().toISOString().slice(0,10)}.json`;
+    
+    // En iPad necesitamos mostrar el contenido en una nueva pestaña
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        window.open(url, '_blank');
+    } else {
+        enlaceDescarga.click();
+    }
+    
+    window.URL.revokeObjectURL(url);
+    mostrarJsonEnModal(todosLosRegistros);
 }
 
 function mostrarJsonEnModal(json) {
