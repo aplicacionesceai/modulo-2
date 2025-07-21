@@ -7,53 +7,50 @@ body {
 }
 .sena-logo {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: 80px;
+  top: 0.8rem;
+  right: 0.8rem;
+  width: 60px;
   height: auto;
   z-index: 1000;
   display: block;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   transition: all 0.3s ease;
 }
 
-/* iPad Air (12.5.7) - 10.9 pulgadas */
-@media screen and (min-width: 820px) and (max-width: 1180px) {
+/* iPad Air específicamente */
+@media only screen 
+and (min-device-width: 820px) 
+and (max-device-width: 1180px) 
+and (-webkit-min-device-pixel-ratio: 2) {
   .sena-logo {
-    width: 100px;
-    top: 1.5rem;
-    right: 2rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    width: 70px;
+    top: 1rem;
+    right: 1rem;
   }
 }
 
-/* iPad Pro 6ta generación - 12.9 pulgadas */
-@media screen and (min-width: 1024px) {
+/* iPad Pro específicamente */
+@media only screen 
+and (min-device-width: 1024px) 
+and (max-device-width: 1366px) 
+and (-webkit-min-device-pixel-ratio: 2) {
   .sena-logo {
-    width: 120px;
-    top: 2rem;
-    right: 2.5rem;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    width: 75px;
+    top: 1rem;
+    right: 1.2rem;
   }
 }
 
-/* Modo paisaje para ambos iPads */
-@media screen and (orientation: landscape) and (min-width: 820px) {
+/* Modo paisaje para iPads */
+@media only screen 
+and (min-device-width: 820px) 
+and (orientation: landscape) {
   .sena-logo {
-    width: 90px;
-    top: 1.2rem;
-    right: 2rem;
-  }
-}
-
-/* Ajuste específico para iPad Pro en modo paisaje */
-@media screen and (orientation: landscape) and (min-width: 1366px) {
-  .sena-logo {
-    width: 110px;
-    top: 1.5rem;
-    right: 2.5rem;
+    width: 65px;
+    top: 0.8rem;
+    right: 1rem;
   }
 }
 main {
