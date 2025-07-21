@@ -7,12 +7,18 @@ function actualizarContador() {
 }
 
 function guardarRegistro(datos) {
-    if (!Array.isArray(registrosAcumulados)) {
-        registrosAcumulados = [];
-    }
+    // Cargar registros existentes del localStorage
+    const registrosGuardados = localStorage.getItem('registrosAcumulados');
+    registrosAcumulados = registrosGuardados ? JSON.parse(registrosGuardados) : [];
+    
+    // Agregar nuevo registro
     registrosAcumulados.push(JSON.parse(datos));
     contadorRegistros = registrosAcumulados.length;
+    
+    // Guardar en localStorage
     localStorage.setItem('registrosAcumulados', JSON.stringify(registrosAcumulados));
+    
+    // Mostrar mensaje con contador
     alert(`✅ Registro guardado correctamente\n\nHas guardado ${contadorRegistros} ${contadorRegistros === 1 ? 'registro' : 'registros'} en total.`);
 }
 

@@ -1,26 +1,30 @@
 
 function limpiarFormulario() {
   const formulario = document.getElementById('formularioModulo');
-  if (formulario) {
-    const respuesta = confirm('¿Desea reiniciar el formulario?\n\nLos registros guardados no se borrarán.');
-    if (respuesta) {
-      // Limpiar todos los inputs
-      formulario.reset();
-      const checkboxes = formulario.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(checkbox => checkbox.checked = false);
-      
-      const radios = formulario.querySelectorAll('input[type="radio"]');
-      radios.forEach(radio => radio.checked = false);
-      
-      const textareas = formulario.querySelectorAll('textarea');
-      textareas.forEach(textarea => textarea.value = '');
-      
-      // Limpiar solo la respuesta actual
-      localStorage.removeItem('respuestas_modulo2');
-      
-      // Mostrar confirmación
-      alert('✅ Formulario reiniciado correctamente');
-    }
+  if (!formulario) return;
+  
+  if (confirm('¿Desea reiniciar el formulario?\n\nLos registros guardados no se borrarán.')) {
+    formulario.reset();
+    
+    // Limpiar checkboxes y asegurar que estén desmarcados
+    formulario.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+      checkbox.checked = false;
+    });
+    
+    // Limpiar radios
+    formulario.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.checked = false;
+    });
+    
+    // Limpiar textareas
+    formulario.querySelectorAll('textarea').forEach(textarea => {
+      textarea.value = '';
+    });
+    
+    // Limpiar solo la respuesta actual, no los registros acumulados
+    localStorage.removeItem('respuestas_modulo2');
+    
+    alert('✅ Formulario reiniciado correctamente');
   }
 }
 
