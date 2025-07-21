@@ -2,10 +2,8 @@ let registrosAcumulados = [];
 let contadorRegistros = 0;
 
 function actualizarContador() {
-    const contadorElement = document.getElementById('contadorRegistros');
-    if (contadorElement) {
-        contadorElement.textContent = `Registros acumulados: ${contadorRegistros}`;
-    }
+    // Ya no necesitamos mostrar el contador en la página
+    return;
 }
 
 function guardarRegistro(datos) {
@@ -16,6 +14,7 @@ function guardarRegistro(datos) {
     contadorRegistros = registrosAcumulados.length;
     actualizarContador();
     localStorage.setItem('registrosAcumulados', JSON.stringify(registrosAcumulados));
+    alert(`✅ Registro guardado correctamente\n\nRegistros acumulados: ${contadorRegistros}`);
 }
 
 function exportarDatos() {
