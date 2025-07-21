@@ -32,8 +32,27 @@ function exportarDatos() {
     // Preparar todos los registros para exportar
     const todosLosRegistros = JSON.stringify(registrosAcumulados, null, 2);
     
-    // Mostrar en el modal directamente
-    mostrarJsonEnModal(todosLosRegistros);
+    // Detectar si es iPad Pro
+    const isIPadPro = window.innerWidth >= 1024 && window.innerHeight >= 1366 && /iPad/.test(navigator.userAgent);
+    
+    if (isIPadPro) {
+        // En iPad Pro intentar descargar
+        try {
+            const blob = new Blob([todosLosRegistros], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const enlaceDescarga = document.createElement('a');
+            enlaceDescarga.href = url;
+            enlaceDescarga.download = `registros_modulo2_${new Date().toISOString().slice(0,10)}.json`;
+            enlaceDescarga.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            // Si falla la descarga, mostrar en modal
+            mostrarJsonEnModal(todosLosRegistros);
+        }
+    } else {
+        // Para otros dispositivos, mostrar en modal
+        mostrarJsonEnModal(todosLosRegistros);
+    }
 }
 
 function copiarAlPortapapeles() {
