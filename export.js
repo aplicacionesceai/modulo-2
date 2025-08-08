@@ -7,19 +7,14 @@ function actualizarContador() {
 }
 
 function guardarRegistro(datos) {
-    // Cargar registros existentes del localStorage
-    const registrosGuardados = localStorage.getItem('registrosAcumulados');
-    registrosAcumulados = registrosGuardados ? JSON.parse(registrosGuardados) : [];
-    
-    // Agregar nuevo registro
+    if (!Array.isArray(registrosAcumulados)) {
+        registrosAcumulados = [];
+    }
     registrosAcumulados.push(JSON.parse(datos));
     contadorRegistros = registrosAcumulados.length;
-    
-    // Guardar en localStorage
+    actualizarContador();
     localStorage.setItem('registrosAcumulados', JSON.stringify(registrosAcumulados));
-    
-    // Mostrar mensaje con contador
-    alert(`✅ Registro guardado correctamente\n\nHas guardado ${contadorRegistros} ${contadorRegistros === 1 ? 'registro' : 'registros'} en total.`);
+    alert(`✅ Registro guardado correctamente\n\nRegistros acumulados: ${contadorRegistros}`);
 }
 
 function exportarDatos() {
@@ -32,27 +27,22 @@ function exportarDatos() {
     // Preparar todos los registros para exportar
     const todosLosRegistros = JSON.stringify(registrosAcumulados, null, 2);
     
-    // Crear y descargar el archivo JSON
+    // Crear el blob y el enlace de descarga
     const blob = new Blob([todosLosRegistros], { type: 'application/json' });
     const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `registros_modulo2_${new Date().toISOString().slice(0,10)}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const enlaceDescarga = document.createElement('a');
+    enlaceDescarga.href = url;
+    enlaceDescarga.download = `registros_modulo2_${new Date().toISOString().slice(0,10)}.json`;
+    
+    // En iPad necesitamos mostrar el contenido en una nueva pestaña
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        window.open(url, '_blank');
+    } else {
+        enlaceDescarga.click();
+    }
+    
     window.URL.revokeObjectURL(url);
-}
-
-function copiarAlPortapapeles() {
-  const textarea = document.getElementById('jsonExportText');
-  textarea.select();
-  try {
-    document.execCommand('copy');
-    alert('✅ JSON copiado correctamente');
-  } catch (err) {
-    alert('Error al copiar el JSON');
-  }
+    mostrarJsonEnModal(todosLosRegistros);
 }
 
 function mostrarJsonEnModal(json) {
@@ -61,15 +51,15 @@ function mostrarJsonEnModal(json) {
   if (!modal) {
     modal = document.createElement('div');
     modal.id = 'modalJsonExport';
-    modal.innerHTML =  `
-      <div style="bac kground:#fff;padding:30px;border-radius:12px;width:90vw;max-width:600px;max-height:85vh;overflow:auto;box-shadow:0 4px 20px rgba(0,0,0,0.2);">
-        <h2 style="ma rgin:0 0 20px 0;color:#0b6121;font-size:1.5rem;text-align:center;">JSON exportado</h2>
-        <textarea id= "jsonExportText" style="width:100%;height:40vh;margin-bottom:20px;padding:15px;border:1px solid #ddd;border-radius:8px;font-size:1rem;font-family:monospace;resize:none;">${json}</textarea>
-        <div style="d isplay:flex;gap:15px;justify-content:center;margin:20px 0;">
-          <button onc lick="copiarAlPortapapeles()" style="background-color:#0b6121;color:white;padding:14px 28px;border:none;border-radius:8px;font-weight:bold;font-size:1.1rem;min-width:140px;box-shadow:0 2px 4px rgba(0,0,0,0.1);">Copiar JSON</button>
-          <button onclick="document.getElementById('modalJsonExport').style.display='none';document.getElementById('modalJsonOverlay').style.display='none';" style="background-color:#666;color:white;padding:14px 28px;border:none;border-radius:8px;font-size:1.1rem;min-width:140px;">Cerrar</button>
+    modal.innerHTML = `
+      <div style="background:#fff;padding:20px;border-radius:8px;max-width:90vw;max-height:80vh;overflow:auto;box-shadow:0 2px 10px #0003;">
+        <h2>JSON exportado</h2>
+        <textarea id="jsonExportText" style="width:100%;height:200px;">${json}</textarea>
+        <div style="margin-top:10px;display:flex;gap:10px;">
+          <button onclick="document.getElementById('jsonExportText').select();document.execCommand('copy');alert('¡Contenido copiado!')">Copiar</button>
+          <button onclick="document.getElementById('modalJsonExport').style.display='none';document.getElementById('modalJsonOverlay').style.display='none';">Cerrar</button>
         </div>
-        <p style="font-size:1rem;color:#666;margin:15px 0 0 0;text-align:center;">Usa el botón "Copiar JSON" para copiar el contenido</p>
+        <p style="font-size:0.9em;color:#666;">Copia el contenido y pégalo donde lo necesites.</p>
       </div>
     `;
     modal.style.position = 'fixed';

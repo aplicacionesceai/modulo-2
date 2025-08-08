@@ -1,41 +1,23 @@
 
 function limpiarFormulario() {
-    try {
-        const formulario = document.getElementById('formularioModulo');
-        console.log('Formulario encontrado:', formulario); // Debug
-        
-        if (!formulario) {
-            console.error('No se encontró el formulario');
-            return;
-        }
-        
-        if (confirm('¿Desea reiniciar el formulario?\n\nLos registros guardados no se borrarán.')) {
-            // Limpiar el formulario
-            formulario.reset();
-            
-            // Limpiar checkboxes
-            const checkboxes = formulario.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(checkbox => checkbox.checked = false);
-            
-            // Limpiar radios
-            const radios = formulario.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => radio.checked = false);
-            
-            // Limpiar textareas
-            const textareas = formulario.querySelectorAll('textarea');
-            textareas.forEach(textarea => textarea.value = '');
-            
-            // Limpiar localStorage
-            localStorage.removeItem('respuestas_modulo2');
-            
-            alert('✅ Formulario reiniciado correctamente');
-            return true;
-        }
-    } catch (error) {
-        console.error('Error al limpiar el formulario:', error);
-        alert('Hubo un error al limpiar el formulario');
+  const formulario = document.getElementById('formularioModulo');
+  if (formulario) {
+    if (confirm('¿Desea reiniciar el formulario? Los datos guardados no se borrarán.')) {
+      formulario.reset();
+
+      const checkboxes = formulario.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => checkbox.checked = false);
+
+      const radios = formulario.querySelectorAll('input[type="radio"]');
+      radios.forEach(radio => radio.checked = false);
+
+      const textareas = formulario.querySelectorAll('textarea');
+      textareas.forEach(textarea => textarea.value = '');
+      
+      localStorage.removeItem('respuestas_modulo2'); // Solo borra la respuesta actual, no los registros acumulados
+      alert('✅ Formulario reiniciado correctamente');
     }
-    return false;
+  }
 }
 
 // Activar campos de texto al marcar 'Otro'
